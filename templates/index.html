@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Form</title>
+</head>
+<body>
+    <h2>Enter Product Details</h2>
+    <form action="{{ url_for('prediction') }}" method="post">
+        <label>Quantity:</label><br>
+        <input type="number" name="qty" step="any" required><br><br>
+
+        <label>Unit Price:</label><br>
+        <input type="number" name="unit_price" step="any" required><br><br>
+
+        <label>Competitive Price 1:</label><br>
+        <input type="number" name="comp_1" step="any" required><br><br>
+
+        <label>Product Score:</label><br>
+        <input type="number" name="product_score" step="any" required><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+    
+
+    {% if prediction %}
+        <h3 style="color: green;">Predicted Total Price: ₹{{ prediction }}</h3>
+    {% endif %}
+</body>
+</html>
