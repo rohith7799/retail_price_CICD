@@ -1,0 +1,40 @@
+name: Docker Build, Docker Push, and Docker Run Retail Price App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      # Step 3: Build Docker image
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/retail-price-app:latest .
+
+      # Step 4: Push Docker image to Docker Hub
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/retail-price-app:latest
+
+      # Step 5: Run the container
+      - name: Run container
+        run: |
+          docker run -d -p 5000:5000 --name retail-price-app \
+          ${{ secrets.DOCKER_HUB_USERNAME }}/retail-price-app:latest
+
+      # Step 6: Verify container is running
+      - name: Check running containers
+        run: docker ps
