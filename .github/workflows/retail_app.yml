@@ -32,12 +32,16 @@ jobs:
       # Step 5: Run the container
       - name: Run container
         run: |
-          docker run -d -p 5000:5000 --name retail-price-app \
+          docker run -p 5000:5000 --name retail-price-app \
           ${{ secrets.DOCKER_HUB_USERNAME }}/retail-price-app:latest
 
-      # Step 6: Verify container is running
+      # printing
+      - name: Print confirmation
+        run: echo "✅ Flask App is running inside Docker container on port 5000"
+      
+      # Step 6: Verify container is running (including stopped)
       - name: Check running containers
-        run: docker ps
+        run: docker ps -a
 
       # step 7: Check logs inside workflow Instead of trying to open in a browser, view Flask logs directly
       # This will print Flask output (like “Running on http://0.0.0.0:5000”) in the GitHub Actions console
