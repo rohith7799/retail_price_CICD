@@ -32,7 +32,7 @@ jobs:
       # Step 5: Run the container
       - name: Run container with timeout
         run: |
-          timeout 20s docker run -p 5000:5000 --name retail-price-app \
+          docker run -d -p 5000:5000 --name retail-price-app \
           ${{ secrets.DOCKER_HUB_USERNAME }}/retail-price-app:latest
 
       # printing
